@@ -55,6 +55,14 @@
   tags:
     - galera-apt-packages
 
+- name: Install qpress from .deb
+  apt:
+    deb: "{{ qpress_package_path }}"
+    force: yes
+  when: not use_percona_upstream
+  tags:
+    - galera-apt-packages
+
 # TODO(cloudnull) -- Remove this after the Mitaka release
 #  This task simply removes the system version of
 #  percona-xtrabackup and xtrabackup if found the
@@ -69,12 +77,32 @@
   with_items:
     - percona-xtrabackup
     - xtrabackup
+  when: use_percona_upstream
+  tags:
+    - percona-apt-packages
+
+- name: Install percona packages upstream
+  apt:
+    deb: "{{ percona_package_path }}"
+    force: yes
+  when: use_percona_upstream
   tags:
     - galera-apt-packages
 
-- name: Install galera package
+- name: Install qpress package fro deb
   apt:
-    deb: "{{ galera_package_path }}"
+    deb: "{{ qpress_package_path }}"
     force: yes
+  when: not use_percona_upstream
   tags:
     - galera-apt-packages
+
+- name: Install percona packages
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - percona-xtrabackup
+  when: not use_percona_upstream
+  tags:
+    - percona-apt-packages

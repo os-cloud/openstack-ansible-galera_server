@@ -18,11 +18,7 @@ galera_gpg_keys:
   - key_name: 'mariadb'
     keyserver: 'hkp://keyserver.ubuntu.com:80'
     fallback_keyserver: 'hkp://p80.pool.sks-keyservers.net:80'
-    hash_id: '0xcbcb082a1bb943db'
-  - key_name: 'percona-xtrabackup'
-    keyserver: 'hkp://keyserver.ubuntu.com:80'
-    fallback_keyserver: 'hkp://p80.pool.sks-keyservers.net:80'
-    hash_id: '0x1c4cbdcdcd2efd2a'
+    hash_id: '0xF1656F24C74CD1D8'
 
 galera_pre_apt_packages:
   - apt-transport-https
@@ -31,7 +27,7 @@ galera_pre_apt_packages:
   - libc6
   - libdbd-mysql-perl
   - libgcc1
-  - libgcrypt11
+  - libgcrypt20
   - libstdc++6
   - python-software-properties
   - software-properties-common
@@ -48,7 +44,6 @@ galera_apt_packages:
   - mariadb-client
   - "{{ galera_mariadb_server_package }}"
   - galera-3
-  - qpress
   - rsync
   - socat
 
@@ -62,5 +57,5 @@ galera_debconf_items:
     value: "{{ galera_root_password }}"
     vtype: "string"
 
-use_percona_upstream: yes
-using_mysql_init: no
+use_percona_upstream: no
+using_mysql_init: yes
